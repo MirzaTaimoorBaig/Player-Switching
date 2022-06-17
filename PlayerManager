@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerManager : MonoBehaviour
+{
+    public List<PlayerController> team1 = new List<PlayerController>();
+    public List<PlayerController1> team2 = new List<PlayerController1>();
+
+
+    GameObject ball;
+    private void Awake()
+    {
+        ball = GameObject.FindGameObjectWithTag("Ball");
+    }
+    private void Start()
+    {
+        DeactivateForTeam1();
+        DeactivateForTeam2();
+        team1[0].enabled = true;
+        team2[0].enabled = true;
+    }
+    void DeactivateForTeam1()
+    {
+        foreach (var controller in team1)
+        {
+            controller.enabled = false;
+        }
+    }
+    void DeactivateForTeam2()
+    {
+        foreach (var controller in team2)
+        {
+            controller.enabled = false;
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+        {
+
+
+
+            PlayerController1 shortestController1 = team2[0];
+            foreach (var item in team2)
+            {
+                if (Vector3.Distance(item.gameObject.transform.position, ball.transform.position) < Vector3.Distance(shortestController1.gameObject.transform.position, ball.transform.position))
+                {
+                    shortestController1 = item;
+
+                }
+            }
+            DeactivateForTeam2();
+            print(shortestController1.gameObject.name);
+            shortestController1.enabled = true;
+        } if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+
+
+            PlayerController shortestController1 = team1[0];
+            foreach (var item in team1)
+            {
+                if (Vector3.Distance( item.gameObject.transform.position,ball.transform.position)< Vector3.Distance(shortestController1.gameObject.transform.position, ball.transform.position))
+                {
+                    shortestController1 = item;
+            
+                }
+            }
+            DeactivateForTeam1();
+            print(shortestController1.gameObject.name);
+            shortestController1.enabled = true;
+        }
+
+
+
+    }
+}
